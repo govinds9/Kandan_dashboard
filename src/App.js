@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import { useDispatch } from "react-redux";
+import { fetchData } from "./Store/apislicer";
+
+import Navbar from "./Components/Navbar";
+import Body from "./Components/Body";
+
+import SideBar from "./Components/SideBar";
+import { setGrouping } from "./Store/groupingSlicer";
+import { setSorting } from "./Store/sortingSlicer";
+import Footer from "./Components/Footer";
 
 function App() {
+  // useEffect(() => {
+  //   setLoading(useSelector((state) => state.apiData.loading));
+  // }, [loading]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchData());
+    dispatch(setGrouping(localStorage.getItem("grouping")));
+    dispatch(setSorting(localStorage.getItem("ordering")));
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+
+      <Body />
+      <SideBar />
+      <Footer />
     </div>
   );
 }
